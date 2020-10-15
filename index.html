@@ -6,7 +6,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Tour 2-9 - Fat-Tour | Hãy đến với Mập</title>
-
+        <meta name="google-signin-client_id" content="768135037395-snue0rdeup6bi3jh0nqlmfa4rr3qtc5d.apps.googleusercontent.com" />
         <link rel="shortcut icon" type="image/x-icon" href="https://fattour.github.io/assets/images/favicon.ico?v=201806290832" />
         <link rel="icon" type="image/x-icon" href="https://fattour.github.io/assets/images/favicon.ico?v=201806290832" />    
 
@@ -105,9 +105,9 @@
                             <li class="nav-item">
                                 <a class="menu-item" href="tour-02072020.html" title="Tour leo núi ngày 04/07/2020">Cô Tiên Mountain 04/07/2020</a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="menu-item" href="#gallery" title="Ảnh thực tế">Ảnh thực tế</a>
-                            </li> -->
+                            <li class="nav-item">
+                                <a onclick="signIn();" class="menu-item" href="javascript:;" title="Ảnh thực tế">login</a>
+                            </li>
                             <!-- <li class="nav-item">
                                 <a class="menu-item" href="#contact" title="Liên hệ">Liên hệ</a>
                             </li> -->
@@ -360,6 +360,50 @@
             document.getElementById("demo").innerHTML = "EXPIRED";
           }
         }, 1000);
+        </script>
+        <script>
+            var _googleKey = '768135037395-snue0rdeup6bi3jh0nqlmfa4rr3qtc5d.apps.googleusercontent.com';
+            
+function onSuccess(googleUser) {
+    try {
+        var profile = googleUser.getBasicProfile();
+        $('[data-selector="txtFullNameSignGG"]').val(profile.getName());
+        $('[data-selector="txtEmailSignGG"]').val(profile.getEmail());
+        $('[data-selector="btnLogGG"]')[0].click();
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+function onFailure(error) {
+    console.log(error);
+}
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
+    return true;
+}
+function init() {
+    gapi.load('auth2', function () {
+        client_id: _googleKey;
+        cookie_policy: 'single_host_origin';
+        scope: 'profile email'
+    });
+}
+function signIn() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    // Sign the user in, and then retrieve their ID.
+    auth2.signIn().then(function () {
+        var profile = auth2.currentUser.get().getBasicProfile();
+        $('[data-selector="txtGoogleId"]').val(profile.getId());
+        $('[data-selector="txtFullNameSignGG"]').val(profile.getName());
+        $('[data-selector="txtEmailSignGG"]').val(profile.getEmail());
+        $('[data-selector="btnLogGG"]')[0].click();
+    });
+}
+
         </script>
     </body>
 </html>
